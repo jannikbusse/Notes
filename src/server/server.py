@@ -11,7 +11,6 @@ app.config["DEBUG"] = True
 
 @app.route('/todo/api/v1.0/notes', methods=['POST'])
 def create_task():
-    print("here")
     if not request.json or not 'content' in request.json or not 'thread' in request.json or not 'channel' in request.json:
         abort(404)
 
@@ -20,6 +19,17 @@ def create_task():
     content = request.json["content"]
 
     db.add_note(thread, channel, content)
+
+    return "done!"
+
+
+@app.route('/todo/api/v1.0/notes/delete', methods=['POST'])
+def delete():    
+    if not request.json or not 'id' in request.json :
+        abort(404)
+
+    id = request.json["id"]
+    db.delete_note(id)
 
     return "done!"
 

@@ -7,7 +7,7 @@ conn = None
 
 dbName = "notes.db"
 
-def createTable():
+def create_table():
     conn = sqlite3.connect(dbName)
     c = conn.cursor()
 
@@ -17,13 +17,22 @@ def createTable():
     conn.close()
 
 
+def delete_note(id):
+    conn = sqlite3.connect(dbName)
+    c = conn.cursor()
+    c.execute("DELETE FROM notes WHERE id =?",(id,))  
+    
+    conn.commit()
+    conn.close()
+
+
+
 def get_notes(thread):
     conn = sqlite3.connect(dbName)
     c = conn.cursor()
 
     c.execute("SELECT * FROM notes WHERE  thread = ?",(thread,))
-    res = c.fetchall()
-    
+    res = c.fetchall()    
     l = []
     for t in res:
         l.append(dict(zip(["id", "thread", "content", "channel"], t)))
