@@ -59,5 +59,5 @@ def api_all():
     return jsonify("hello")
 
 
-db.createTable()
+db.create_table()
 app.run()
